@@ -1,12 +1,10 @@
 # [nonebot2](https://github.com/nonebot/nonebot2)的色图姬插件
 
-本项目是[opq-osc/OPQ-SetuBot](https://github.com/opq-osc/OPQ-SetuBot)的色图插件移植的 (本项目wiki还没写,可以参考这个项目的)
+本项目是[opq-osc/OPQ-SetuBot](https://github.com/opq-osc/OPQ-SetuBot)的色图插件移植的 
 
-可能有bug...
 
-欢迎提issues...
 
-#### 详细信息看[wiki](https://github.com/yuban10703/setu-nonebot2/wiki) (还没写...)
+#### 详细信息看[wiki](https://github.com/yuban10703/setu-nonebot2/wiki) (还没写完,有问题直接提issue)
 
 
 
