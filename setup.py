@@ -5,7 +5,7 @@ with open("README.md", "r", encoding='UTF-8') as fh:
 
 setuptools.setup(
     name="setu-nonebot2",
-    version="0.0.1",
+    version="0.0.2",
     author="yuban10703",
     author_email="yuban10703@foxmail.com",
     python_requires=">=3.8",
