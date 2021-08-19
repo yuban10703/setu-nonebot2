@@ -1,4 +1,7 @@
+nonebot2
+nonebot-adapter-cqhttp
 httpx
 httpx-socks[asyncio]
 pydantic
 tinydb
+nb-cli
