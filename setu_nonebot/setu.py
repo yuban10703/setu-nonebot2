@@ -75,10 +75,10 @@ class Setu:
             for k, v in self.config.setuInfoShow.dict().items():  # type:ignore
                 if v:
                     msg += ("" if msg == "" else "\r\n") + msgDict[k]
-            if self.config.setting.revokeTime.dict()[self.event_type] != 0 and self.event_type == "group":
-                msg += "\r\nREVOKE[{}]".format(
-                    self.config.setting.revokeTime.dict()[self.event_type]  # type:ignore
-                )
+            # if self.config.setting.revokeTime.dict()[self.event_type] != 0 and self.event_type == "group":
+            #     msg += "\r\nREVOKE[{}]".format(
+            #         self.config.setting.revokeTime.dict()[self.event_type]  # type:ignore
+            #     )
             if self.config.setting.at:  # type:ignore
                 return "\r\n" + msg
             return msg
