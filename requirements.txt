@@ -1,0 +1,4 @@
+httpx
+httpx-socks[asyncio]
+pydantic
+tinydb
