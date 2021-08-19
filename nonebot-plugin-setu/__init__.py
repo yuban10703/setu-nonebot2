@@ -33,8 +33,8 @@ digitalConversionDict = {
     "九": 9,
     "十": 10,
 }
-# callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[色瑟涩䔼😍🐍][图圖🤮]', priority=5)
-callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[s][t]', priority=5)
+callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[色瑟涩䔼😍🐍][图圖🤮]', priority=5)
+# callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[s][t]', priority=5)
 
 
 @callsetu.handle()

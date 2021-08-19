@@ -1,4 +1,4 @@
-# nonebot的色图姬插件
+# [nonebot2](https://github.com/nonebot/nonebot2)的色图姬插件
 
 本项目是[opq-osc/OPQ-SetuBot](https://github.com/opq-osc/OPQ-SetuBot)的色图插件移植的
 
