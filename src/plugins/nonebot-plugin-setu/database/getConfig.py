@@ -6,7 +6,7 @@ from loguru import logger
 
 from ..model import FriendConfig, GroupConfig
 
-curFileDir = Path(__file__).absolute().parent  # 当前文件路径
+curFileDir = Path(__file__).parent  # 当前文件路径
 
 
 def getGroupConfig(groupID) -> Union[GroupConfig, None]:

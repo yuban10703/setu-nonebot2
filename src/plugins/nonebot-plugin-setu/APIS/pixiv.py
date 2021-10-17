@@ -27,7 +27,7 @@ driver = get_driver()
 
 class PixivToken:
     def __init__(self):
-        self.tokenPath = Path(__file__).absolute().parent.parent / ".PixivToken.json"
+        self.tokenPath = Path(__file__).parent.parent / ".PixivToken.json"
         self.tokendata = {}
         self.Client = httpx.AsyncClient(proxies=proxies, transport=transport)
 

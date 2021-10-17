@@ -8,6 +8,7 @@ import time
 from io import BytesIO
 from typing import List
 from typing import Union
+from retrying_async import retry
 
 import httpx
 from nonebot.adapters import Bot
@@ -95,7 +96,7 @@ class Setu:
                 conversion_dict[API.__name__]
             ]:  # 遍历API的开启状态
                 setu_all = await API(self.getSetuConfig).main()
-                setu_filtered = self.filter_Sent(setu_all)
+                setu_filtered = await self.filter_Sent(setu_all)
                 logger.success(
                     "{}:{} 从API:{}获取到关于{}的色图{}张,去除{}s内重复发送过的后剩余{}张".format(
                         "好友" if self.event_type == "friend" else "群",
@@ -123,6 +124,19 @@ class Setu:
 
     async def sendsetu_forBase64(self, setus: List[FinishSetuData]):
         """发送setu,下载后用Base64发给OPQ"""
+        async with httpx.AsyncClient(limits=httpx.Limits(max_keepalive_connections=8, max_connections=10),
+                                     proxies=proxies,
+                                     transport=transport,
+                                     headers={"Referer": "https://www.pixiv.net"},
+                                     timeout=10) as client:
+            @retry(attempts=3, delay=0.5, fallback="https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg")
+            async def download_setu(url) -> Union[bytes, str]:
+                res = await client.get(url)
+                if res.status_code != 200:
+                    raise Exception(f"http状态码:{res.status_code}")
+                return res.content
+                # return "https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg"
+
         async with httpx.AsyncClient(
                 limits=httpx.Limits(
                     max_keepalive_connections=8, max_connections=10, keepalive_expiry=8
@@ -175,11 +189,11 @@ class Setu:
             self.getSetuConfig.level = 2
         return True
 
-    def filter_Sent(self, setus: List[FinishSetuData]) -> List[FinishSetuData]:  # 过滤一段时间内发送过的图片
+    async def filter_Sent(self, setus: List[FinishSetuData]) -> List[FinishSetuData]:  # 过滤一段时间内发送过的图片
         if setus != None:
             setus_copy = setus.copy()
             for setu in setus:
-                if ifSent(
+                if await ifSent(
                         getattr(self, "QQG", None) or getattr(self, "QQ", None),
                         int(setu.picID),
                         self.config.setting.sentRefreshTime,

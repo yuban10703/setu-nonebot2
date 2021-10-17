@@ -4,4 +4,6 @@ httpx
 httpx-socks[asyncio]
 pydantic
 tinydb
+tinyrecordsync
 nb-cli
+nonebot_plugin_apscheduler

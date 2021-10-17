@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "setu-nonebot2"
+version = "0.1.0"
+description = ""
+authors = ["yuban10703"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+
+# [[tool.poetry.source]]
+# name = "aliyun"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# default = true
