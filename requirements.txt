@@ -4,6 +4,8 @@ httpx
 httpx-socks[asyncio]
 pydantic
 tinydb
-tinyrecordsync
+tinyrecord
 nb-cli
 nonebot_plugin_apscheduler
+retrying-async
+
