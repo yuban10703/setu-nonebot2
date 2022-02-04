@@ -1,20 +1,18 @@
-# import nonebot
+import json
 import re
-from typing import Union
+from pathlib import Path
 
 from nonebot import get_driver
 from nonebot import on_regex
-from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import MessageSegment, Event, GroupMessageEvent, PrivateMessageEvent
+from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment
 from nonebot.log import logger
+from nonebot.params import State
 from nonebot.typing import T_State
-from nonebot import get_driver
-import json
-from pathlib import Path
+
 from .config import Config
 from .model import GetSetuConfig
-from .setu import Setu
 from .model import GroupConfig
+from .setu import Setu
 
 driver = get_driver()
 
@@ -34,11 +32,13 @@ digitalConversionDict = {
     "十": 10,
 }
 callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[色瑟涩䔼😍🐍][图圖🤮]', priority=5)
+
+
 # callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[s][t]', priority=5)
 
 
 @callsetu.handle()
-async def handle_first_receive(bot: Bot, event: Union[Event, GroupMessageEvent, PrivateMessageEvent], state: T_State):
+async def handle_first_receive(bot: Bot, event: Event, state: T_State = State()):
     # print(state["_matched_groups"])
     # print(event.get_user_id())
     # print(event.message_type)
@@ -48,7 +48,7 @@ async def handle_first_receive(bot: Bot, event: Union[Event, GroupMessageEvent, 
     #     print(event.group_id)
     # elif isinstance(event, PrivateMessageEvent):
     #     print(event.sender.group_id)
-
+    # print(foo)
     config_getSetu: GetSetuConfig = GetSetuConfig()
     info = state["_matched_groups"]
     if info[0] != "":

@@ -8,7 +8,7 @@ import time
 from io import BytesIO
 from typing import List
 from typing import Union
-from retrying_async import retry
+from tenacity import retry, stop_after_attempt, wait_random
 
 import httpx
 from nonebot.adapters import Bot
@@ -129,7 +129,8 @@ class Setu:
                                      transport=transport,
                                      headers={"Referer": "https://www.pixiv.net"},
                                      timeout=10) as client:
-            @retry(attempts=3, delay=0.5, fallback="https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg")
+            @retry(stop=stop_after_attempt(3), wait=wait_random(min=1, max=2), retry_error_callback=lambda
+                    retry_state: "https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg")
             async def download_setu(url) -> Union[bytes, str]:
                 res = await client.get(url)
                 if res.status_code != 200:
@@ -267,5 +268,5 @@ class Setu:
             else:
                 logger.warning("无群:{}的配置文件".format(self.QQG))
         await self.send(MessageSegment.text(
-            "如果要使用Setu插件,请参考https://github.com/opq-osc/OPQ-SetuBot/wiki对本群的配置文件初始化"
+            "无配置文件,请联系bot管理员"
         ))

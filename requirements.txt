@@ -7,5 +7,5 @@ tinydb
 tinyrecord
 nb-cli
 nonebot_plugin_apscheduler
-retrying-async
+tenacity
 

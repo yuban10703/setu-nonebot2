@@ -1,9 +1,8 @@
 [tool.poetry]
-name = "SetuBot"
+name = "nonebot-plugin-setu"
 version = "0.1.0"
 description = "SetuBot"
 authors = []
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
