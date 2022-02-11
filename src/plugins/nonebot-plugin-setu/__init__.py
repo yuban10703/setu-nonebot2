@@ -53,7 +53,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State = State())
     info = state["_matched_groups"]
     if info[0] != "":
         if info[0] in digitalConversionDict.keys():
-            config_getSetu.toGetNum = int(digitalConversionDict[info[1]])
+            config_getSetu.toGetNum = int(digitalConversionDict[info[0]])
         else:
             if info[0].isdigit():
                 config_getSetu.toGetNum = int(info[0])
