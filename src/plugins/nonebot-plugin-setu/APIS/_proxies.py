@@ -1,5 +1,5 @@
-from httpx_socks import AsyncProxyTransport
 import nonebot
+from httpx_socks import AsyncProxyTransport
 from nonebot.log import logger
 
 global_config = nonebot.get_driver().config

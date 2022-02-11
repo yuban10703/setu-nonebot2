@@ -7,8 +7,6 @@ from typing import List
 import httpx
 from nonebot.log import logger
 
-
-from ._proxies import proxies, transport
 from ..model import FinishSetuData, GetSetuConfig
 
 

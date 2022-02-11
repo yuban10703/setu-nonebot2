@@ -1,11 +1,10 @@
-nonebot2
-nonebot-adapter-cqhttp
+nb-cli
+nonebot-adapter-onebot
+nonebot_plugin_apscheduler
 httpx
 httpx-socks[asyncio]
 pydantic
 tinydb
 tinyrecord
-nb-cli
-nonebot_plugin_apscheduler
 tenacity
 

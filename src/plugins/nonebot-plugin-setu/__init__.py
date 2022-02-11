@@ -16,7 +16,7 @@ from .setu import Setu
 
 driver = get_driver()
 
-global_config = get_driver().config
+global_config = driver.config
 config = Config(**global_config.dict())
 digitalConversionDict = {
     "一": 1,

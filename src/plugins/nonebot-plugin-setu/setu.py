@@ -8,12 +8,12 @@ import time
 from io import BytesIO
 from typing import List
 from typing import Union
-from tenacity import retry, stop_after_attempt, wait_random
 
 import httpx
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp import MessageSegment, Event, GroupMessageEvent, PrivateMessageEvent
+from nonebot.adapters.onebot.v11 import MessageSegment, Event, GroupMessageEvent, PrivateMessageEvent
 from nonebot.log import logger
+from tenacity import retry, stop_after_attempt, wait_random
 
 from .APIS import Lolicon, Yuban, Pixiv
 from .APIS._proxies import proxies, transport
