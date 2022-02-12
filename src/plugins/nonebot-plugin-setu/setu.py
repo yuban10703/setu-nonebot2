@@ -138,10 +138,15 @@ class Setu:
                 return res.content
 
             for setu in setus:
-                resp = await client.get(setu.dict()[self.conversion_for_send_dict[self.config.setting.quality]])
-                await self.send(
-                    MessageSegment.image(BytesIO(resp.content)) + MessageSegment.text(self.buildMsg(setu))
-                )
+                resp = await download_setu(setu.dict()[self.conversion_for_send_dict[self.config.setting.quality]])
+                if type(resp) != str:
+                    await self.send(
+                        MessageSegment.image(BytesIO(resp)) + MessageSegment.text(self.buildMsg(setu))
+                    )
+                else:
+                    await self.send(
+                        MessageSegment.image(resp) + MessageSegment.text(self.buildMsg(setu))
+                    )
                 await asyncio.sleep(1)
 
     async def auth(self) -> bool:
