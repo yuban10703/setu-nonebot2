@@ -3,7 +3,7 @@
 # @Author  : yuban10703
 
 # type:ignore
-
+import asyncio
 import time
 from io import BytesIO
 from typing import List
@@ -136,21 +136,13 @@ class Setu:
                 if res.status_code != 200:
                     raise Exception(f"http状态码:{res.status_code}")
                 return res.content
-                # return "https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg"
 
-        async with httpx.AsyncClient(
-                limits=httpx.Limits(
-                    max_keepalive_connections=8, max_connections=10, keepalive_expiry=8
-                ),
-                proxies=proxies,
-                transport=transport,
-                headers={"Referer": "https://www.pixiv.net"},
-                timeout=10,
-        ) as client:
             for setu in setus:
                 resp = await client.get(setu.dict()[self.conversion_for_send_dict[self.config.setting.quality]])
-                await self.send(MessageSegment.image(BytesIO(resp.content)) + MessageSegment.text(
-                    self.buildMsg(setu)))
+                await self.send(
+                    MessageSegment.image(BytesIO(resp.content)) + MessageSegment.text(self.buildMsg(setu))
+                )
+                await asyncio.sleep(1)
 
     async def auth(self) -> bool:
         """
