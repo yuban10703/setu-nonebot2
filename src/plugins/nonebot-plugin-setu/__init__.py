@@ -6,7 +6,6 @@ from nonebot import get_driver
 from nonebot import on_regex
 from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment
 from nonebot.log import logger
-from nonebot.params import State
 from nonebot.typing import T_State
 
 from .config import Config
@@ -38,7 +37,7 @@ callsetu = on_regex('来(.*?)[点丶、个份张幅](.*?)的?([rR]18)?[色瑟涩
 
 
 @callsetu.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: T_State = State()):
+async def handle(bot: Bot, event: Event, state: T_State):
     # print(state["_matched_groups"])
     # print(event.get_user_id())
     # print(event.message_type)
