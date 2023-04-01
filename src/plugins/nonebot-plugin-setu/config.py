@@ -1,8 +1,11 @@
-from pydantic import BaseSettings
+from pydantic import BaseModel
+from nonebot import get_driver
 
 
-class Config(BaseSettings):
+class Config(BaseModel):
     # Your Config Here
+    proxies: str = None
+    transpose: bool = False
 
-    class Config:
-        extra = "ignore"
+
+setu_config = Config.parse_obj(get_driver().config)

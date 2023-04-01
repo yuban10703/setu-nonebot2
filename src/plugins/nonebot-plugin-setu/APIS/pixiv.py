@@ -13,11 +13,10 @@ from pathlib import Path
 from typing import List
 
 import httpx
-from nonebot import get_driver
-from nonebot import require
+from nonebot import require, get_driver
 from nonebot.log import logger
 
-from ._proxies import proxies, transport
+from ..config import setu_config
 from ..model import FinishSetuData, GetSetuConfig
 
 scheduler = require("nonebot_plugin_apscheduler").scheduler
@@ -29,7 +28,7 @@ class PixivToken:
     def __init__(self):
         self.tokenPath = Path(__file__).parent.parent / ".PixivToken.json"
         self.tokendata = {}
-        self.Client = httpx.AsyncClient(proxies=proxies, transport=transport)
+        self.Client = httpx.AsyncClient(proxies=setu_config.proxies)
 
     def headers(self):
         hash_secret = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
@@ -131,7 +130,7 @@ driver.on_startup(pixivToken.main)
 class Pixiv:
     def __init__(self, config: GetSetuConfig):
         self.config = config
-        self.Client = httpx.AsyncClient(proxies=proxies, transport=transport)
+        self.Client = httpx.AsyncClient(proxies=setu_config.proxies)
 
     async def get(self):  # p站热度榜
         tags = self.config.tags.copy()

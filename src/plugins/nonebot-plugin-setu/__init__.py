@@ -8,7 +8,6 @@ from nonebot.adapters.onebot.v11 import Bot, Event, MessageSegment
 from nonebot.log import logger
 from nonebot.typing import T_State
 
-from .config import Config
 from .model import GetSetuConfig
 from .model import GroupConfig
 from .setu import Setu
@@ -16,7 +15,6 @@ from .setu import Setu
 driver = get_driver()
 
 global_config = driver.config
-config = Config(**global_config.dict())
 digitalConversionDict = {
     "一": 1,
     "二": 2,

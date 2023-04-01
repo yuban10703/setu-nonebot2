@@ -5,7 +5,6 @@
 # type:ignore
 import asyncio
 import time
-from io import BytesIO
 from typing import List
 from typing import Union
 
@@ -13,12 +12,12 @@ import httpx
 from nonebot.adapters import Bot
 from nonebot.adapters.onebot.v11 import MessageSegment, Event, GroupMessageEvent, PrivateMessageEvent
 from nonebot.log import logger
-from tenacity import retry, stop_after_attempt, wait_random
 
 from .APIS import Lolicon, Yuban, Pixiv
-from .APIS._proxies import proxies, transport
+from .config import setu_config
 from .database import freqLimit, getFriendConfig, getGroupConfig, ifSent
 from .model import FinishSetuData, GetSetuConfig, GroupConfig, FriendConfig
+from .utils import download_setu
 
 
 class Setu:
@@ -124,30 +123,30 @@ class Setu:
 
     async def sendsetu_forBase64(self, setus: List[FinishSetuData]):
         """发送setu,下载后用Base64发给OPQ"""
-        async with httpx.AsyncClient(limits=httpx.Limits(max_keepalive_connections=8, max_connections=10),
-                                     proxies=proxies,
-                                     transport=transport,
-                                     headers={"Referer": "https://www.pixiv.net"},
-                                     timeout=10) as client:
-            @retry(stop=stop_after_attempt(3), wait=wait_random(min=1, max=2), retry_error_callback=lambda
-                    retry_state: "https://cdn.jsdelivr.net/gh/yuban10703/BlogImgdata/img/error.jpg")
-            async def download_setu(url) -> Union[bytes, str]:
-                res = await client.get(url)
-                if res.status_code != 200:
-                    raise Exception(f"http状态码:{res.status_code}")
-                return res.content
-
+        async with httpx.AsyncClient(
+                proxies=setu_config.proxies,
+                headers={"Referer": "https://www.pixiv.net"},
+                timeout=10) as client:
             for setu in setus:
-                resp = await download_setu(setu.dict()[self.conversion_for_send_dict[self.config.setting.quality]])
-                if type(resp) != str:
-                    await self.send(
-                        MessageSegment.image(BytesIO(resp)) + MessageSegment.text(self.buildMsg(setu))
-                    )
-                else:
-                    await self.send(
-                        MessageSegment.image(resp) + MessageSegment.text(self.buildMsg(setu))
-                    )
-                await asyncio.sleep(1)
+                await self.send(
+                    MessageSegment.image(await download_setu(
+                        client,
+                        setu.dict()[
+                            self.conversion_for_send_dict[self.config.setting.quality]
+                        ],
+                    )) + MessageSegment.text(self.buildMsg(setu)))
+                await asyncio.sleep(2)
+
+                # resp = await download_setu(setu.dict()[self.conversion_for_send_dict[self.config.setting.quality]])
+                # if type(resp) != str:
+                #     await self.send(
+                #         MessageSegment.image(BytesIO(resp)) + MessageSegment.text(self.buildMsg(setu))
+                #     )
+                # else:
+                #     await self.send(
+                #         MessageSegment.image(resp) + MessageSegment.text(self.buildMsg(setu))
+                #     )
+                # await asyncio.sleep(1)
 
     async def auth(self) -> bool:
         """

@@ -2,9 +2,9 @@ nb-cli
 nonebot-adapter-onebot
 nonebot_plugin_apscheduler
 httpx
-httpx-socks[asyncio]
 pydantic
 tinydb
 tinyrecord
 tenacity
-
+Pillow
+httpx[socks]
